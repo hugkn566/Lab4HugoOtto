@@ -1,0 +1,16 @@
+Package: Lab4HugoOtto
+Version: 1.0
+Date: 2020-09-07
+Title: Euclidian and Dijkstra's algorithms
+Authors@R: c(person("Hugo", "Knape", role = c("aut", "cre"),
+                     email = "hugkn566@student.liu.se"),
+              person("Otto", "Moen", email = "ottmo242@student.liu.se", role = "aut"))
+Author: Hugo Knape, Otto Moen 
+Maintainer: Otto Moen <ottmo242@student.liu.se>
+Depends: R (>= 3.1.0)
+Description: The package provides two different functions. The first function is used to compute the euclidean algorithm, which returns the greatest common divisor of two numbers. The second function computes Dijkstras algorithm, which returns the shortest path from an initial node to every other node within a graph.  
+License: GPL (>= 2)
+LazyData: true
+RoxygenNote: 7.1.1
+Suggests: 
+    testthat
