@@ -1,0 +1,13 @@
+#' Residuals method for linreg objects
+#' 
+#' @description Residuals from an object of the class .
+#' @param object An object of class .
+#' @return A vector of residuals.
+#' @examples 
+#'   
+
+residuals.linreg <- function(object){
+  e <- as.vector(object$e_hat)
+  return(e)
+}
+
