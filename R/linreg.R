@@ -40,7 +40,9 @@ linreg <- function(formula, data){
   
   p <- 2*pt(q=abs(t_beta), df=df, lower.tail = FALSE)
 
-  result <- list(beta_hat=beta_hat,
+  result <- list(formula= formula,
+                 data_name= substitute(data),
+                 beta_hat=beta_hat,
                  y_hat=y_hat,
                  e_hat=e_hat,
                  df=df,
