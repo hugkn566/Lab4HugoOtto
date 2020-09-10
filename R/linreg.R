@@ -2,9 +2,15 @@
 #' 
 #' @param formula An object of the class \code{\link[stats]{formula}}.
 #' @param data A data frame.
+#' @return The function returns the results of the linear regression as an object of class .
+#' @examples 
+#' 
 
 ### linreg ###
 linreg <- function(formula, data){
+  
+  # Checking if the arguments are correct
+  stopifnot(class(formula)=="formula" & is.data.frame(data))
   
   # Setting up the matrices
   X <- model.matrix(formula, data)
