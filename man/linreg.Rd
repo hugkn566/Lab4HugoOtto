@@ -11,6 +11,12 @@ linreg(formula, data)
 
 \item{data}{A data frame.}
 }
+\value{
+The function returns the results of the linear regression as an object of class .
+}
 \description{
 Perform linear regression with OLS
+}
+\examples{
+
 }
