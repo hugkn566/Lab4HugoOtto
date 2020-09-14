@@ -7,24 +7,32 @@
 #' @examples 
 
 summary.linreg <- function(object,...){
-  m <- matrix(0, nrow = nrow(object$var_beta_hat), ncol = 4, dimnames = list(row.names(object$var_beta_hat), c("Estimate", "Std. Error", "t value", "Pr(>|t|)")))
+  m <- matrix(0, nrow = nrow(object$var_beta_hat), ncol = 4, dimnames = list(row.names(object$var_beta_hat), c("Estimate", "Std.Error", "t value", "Pr(>|t|)")))
   m[,1] <- object$beta_hat
   m[,2] <- sqrt(diag(object$var_beta_hat))
   m[,3] <- object$t_beta
   m[,4] <- object$p
-  
+  m <- round(m, digits = 2)
   res <- paste("Residual standard error:", round(sqrt(object$sigma2_hat), digits = 4), "on", object$df, "degrees of freedom")
   
   list <- list(m,res)
-  class(list) <- "summary.linreg"
-  return(list)
+  colnames(list[[1]]) <- rep(" ", 4)
+  
+  t <- c()
+  names <- c("(Intercept)", rownames(list[[1]])[2:nrow(list[[1]])])
+  for (rows in 1:nrow(list[[1]])) {
+    t[rows] <- paste(names[rows], list[[c(1,rows)]], list[[c(1,(rows+3))]], list[[c(1,(rows+6))]], list[[c(1,rows+9)]])
+  }
+  cat(t[1], sep="\n")
+  # cat(" ", sep="\n")
+  # cat(list[[2]]) 
 }
 
 #' @describeIn summary.linreg 
 
-print.summary.linreg <- function(x,...){
-  print(x[[1]])
-  cat(" ", sep = "\n")
-  cat(x[[2]]) 
-}
+# print.summary.linreg <- function(x,...){
+#   print(x[[1]])
+#   cat(" ", sep = "\n")
+#   cat(x[[2]]) 
+# }
 
