@@ -27,3 +27,4 @@ print.summary.linreg <- function(x,...){
   cat(" ", sep = "\n")
   cat(x[[2]]) 
 }
+
