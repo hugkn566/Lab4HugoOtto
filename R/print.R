@@ -3,11 +3,13 @@
 #' @description Estimated coeffiencts from an object of class
 #' @param object An object of Class
 #' @return A list of estimated coeffiencts
-print.linreg <- function(x) {
-  matris <- as.matrix(x$beta_hat)
-  testar <- as.data.frame(t(matris))
-  rownames(testar) <- ""
-  lista <- list(coefficents=testar)
-  return(lista)
-  }
+print.linreg <- function(object,...) {
+  colnames(object$beta_hat) <- ""
+  
+  cat("Call:", sep="\n")
+  cat("linreg(formula = ", object$y_name, " ", "~", " ", object$x_names, ", ","data = ", object$data_name, ")", sep = "")
+  cat(" ", sep = "\n")
+  cat("Coefficients:", sep="\n")
+  print(as.matrix(t(object$beta_hat)))
+}
 
