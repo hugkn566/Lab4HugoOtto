@@ -2,7 +2,7 @@
 #' 
 #' @param formula An object of the class \code{\link[stats]{formula}}.
 #' @param data A data frame.
-#' @return The function returns the results of the linear regression as an object of class .
+#' @return The function returns the results of the linear regression as an object of class "linreg".
 #' @examples 
 #' 
 

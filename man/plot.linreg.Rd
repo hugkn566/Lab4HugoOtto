@@ -13,5 +13,5 @@
 Two scatter plots. The first one is residuals vs fitted values and the second is the scale-location.
 }
 \description{
-\code{plot} method for objects of the class .
+\code{plot} method for objects of the class "linreg".
 }

@@ -7,13 +7,13 @@
 \method{coef}{linreg}(object)
 }
 \arguments{
-\item{object}{An object of class .}
+\item{object}{An object of class "linreg".}
 }
 \value{
 A vector of coefficients.
 }
 \description{
-Extract coefficients from an object of the class .
+Extract coefficients from an object of the class "linreg".
 }
 \examples{
  

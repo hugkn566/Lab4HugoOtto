@@ -1,8 +1,8 @@
 #' Print out the estimated coeffiencts 
 #' 
-#' @description Estimated coeffiencts from an object of class
-#' @param object An object of Class
-#' @return A list of estimated coeffiencts
+#' @description Estimated coeffiencts from an object of class "linreg".
+#' @param object An object of Class "linreg".
+#' @return A list of estimated coeffiencts.
 print.linreg <- function(object,...) {
   colnames(object$beta_hat) <- ""
   

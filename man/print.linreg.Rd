@@ -7,11 +7,11 @@
 \method{print}{linreg}(object, ...)
 }
 \arguments{
-\item{object}{An object of Class}
+\item{object}{An object of Class "linreg".}
 }
 \value{
-A list of estimated coeffiencts
+A list of estimated coeffiencts.
 }
 \description{
-Estimated coeffiencts from an object of class
+Estimated coeffiencts from an object of class "linreg".
 }

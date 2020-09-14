@@ -7,13 +7,13 @@
 pred(object, ...)
 }
 \arguments{
-\item{object}{An object of class .}
+\item{object}{An object of class "linreg".}
 }
 \value{
 A vector of predicted values.
 }
 \description{
-Predicted values from an object of the class .
+Predicted values from an object of the class "linreg".
 }
 \examples{
  

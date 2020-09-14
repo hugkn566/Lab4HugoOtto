@@ -1,7 +1,7 @@
 #' Residuals method for linreg objects
 #' 
-#' @description Residuals from an object of the class .
-#' @param object An object of class .
+#' @description Residuals from an object of the class "linreg".
+#' @param object An object of class "linreg".
 #' @return A vector of residuals.
 #' @examples 
 #'   

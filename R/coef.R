@@ -1,7 +1,7 @@
 #' Coef method for linreg objects
 #' 
-#' @description Extract coefficients from an object of the class .
-#' @param object An object of class .
+#' @description Extract coefficients from an object of the class "linreg".
+#' @param object An object of class "linreg".
 #' @return A vector of coefficients.
 #' @examples 
 #'  

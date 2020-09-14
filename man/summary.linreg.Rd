@@ -13,5 +13,5 @@
 A list of summary statistics from a linear regression model, \code{object}, of the class "linreg".
 }
 \description{
-\code{summary} method for objects of the class .
+\code{summary} method for objects of the class "linreg".
 }

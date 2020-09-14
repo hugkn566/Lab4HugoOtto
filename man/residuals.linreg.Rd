@@ -7,13 +7,13 @@
 \method{residuals}{linreg}(object)
 }
 \arguments{
-\item{object}{An object of class .}
+\item{object}{An object of class "linreg".}
 }
 \value{
 A vector of residuals.
 }
 \description{
-Residuals from an object of the class .
+Residuals from an object of the class "linreg".
 }
 \examples{
   
