@@ -15,6 +15,3 @@ A vector of predicted values.
 \description{
 Predicted values from an object of the class "linreg".
 }
-\examples{
- 
-}

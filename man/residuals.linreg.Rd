@@ -15,6 +15,3 @@ A vector of residuals.
 \description{
 Residuals from an object of the class "linreg".
 }
-\examples{
-  
-}

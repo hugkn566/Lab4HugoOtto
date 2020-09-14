@@ -9,14 +9,11 @@ linreg(formula, data)
 \arguments{
 \item{formula}{An object of the class \code{\link[stats]{formula}}.}
 
-\item{data}{A data frame.}
+\item{data}{A data set of the class \code{\link[base]{data.frame}}}
 }
 \value{
 The function returns the results of the linear regression as an object of class "linreg".
 }
 \description{
 Perform linear regression with OLS
-}
-\examples{
-
 }

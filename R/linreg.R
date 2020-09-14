@@ -1,10 +1,8 @@
 #' Perform linear regression with OLS
 #' 
 #' @param formula An object of the class \code{\link[stats]{formula}}.
-#' @param data A data frame.
+#' @param data A data set of the class \code{\link[base]{data.frame}}
 #' @return The function returns the results of the linear regression as an object of class "linreg".
-#' @examples 
-#' 
 
 ### linreg ###
 linreg <- function(formula, data){

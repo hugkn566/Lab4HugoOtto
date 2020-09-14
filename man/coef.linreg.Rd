@@ -15,6 +15,3 @@ A vector of coefficients.
 \description{
 Extract coefficients from an object of the class "linreg".
 }
-\examples{
- 
-}
