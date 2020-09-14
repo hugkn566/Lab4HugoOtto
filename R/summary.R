@@ -12,20 +12,28 @@ summary.linreg <- function(object,...){
   m[,2] <- sqrt(diag(object$var_beta_hat))
   m[,3] <- object$t_beta
   m[,4] <- object$p
-  m <- round(m, digits = 2)
+  m <- round(m, digits = 5)
+  dots <- apply(t(m[,4]), 2, FUN= function(x)if(x<0.001){
+    paste("***")
+    }else if(x<0.01){
+      paste("**")
+    }else if(x<0.05){
+      paste("*")
+    }else if(x<0.1){
+      paste(".")
+    }else if(x<1){
+      paste(" ")
+    })
+  
   res <- paste("Residual standard error:", round(sqrt(object$sigma2_hat), digits = 4), "on", object$df, "degrees of freedom")
   
-  list <- list(m,res)
-  colnames(list[[1]]) <- rep(" ", 4)
-  
   t <- c()
-  names <- c("(Intercept)", rownames(list[[1]])[2:nrow(list[[1]])])
-  for (rows in 1:nrow(list[[1]])) {
-    t[rows] <- paste(names[rows], list[[c(1,rows)]], list[[c(1,(rows+3))]], list[[c(1,(rows+6))]], list[[c(1,rows+9)]])
+  for (rows in 1:nrow(m)) {
+    t[rows] <- paste(rownames(m)[rows], m[rows,1], m[rows,2], m[rows,3], m[rows,4], dots[rows])
   }
-  cat(t[1], sep="\n")
-  # cat(" ", sep="\n")
-  # cat(list[[2]]) 
+  cat(t, sep="\n")
+  cat(" ", sep="\n")
+  cat(res) 
 }
 
 #' @describeIn summary.linreg 
