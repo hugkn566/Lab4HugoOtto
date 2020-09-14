@@ -7,13 +7,13 @@
 #' @examples 
 
 summary.linreg <- function(object,...){
-  m <- matrix(0, nrow = nrow(test$var_beta_hat), ncol = 4, dimnames = list(row.names(test$var_beta_hat), c("Estimate", "Std. Error", "t value", "Pr(>|t|)")))
-  m[,1] <- test$beta_hat
-  m[,2] <- sqrt(diag(test$var_beta_hat))
-  m[,3] <- test$t_beta
-  m[,4] <- test$p
+  m <- matrix(0, nrow = nrow(object$var_beta_hat), ncol = 4, dimnames = list(row.names(object$var_beta_hat), c("Estimate", "Std. Error", "t value", "Pr(>|t|)")))
+  m[,1] <- object$beta_hat
+  m[,2] <- sqrt(diag(object$var_beta_hat))
+  m[,3] <- object$t_beta
+  m[,4] <- object$p
   
-  res <- paste("Residual standard error:", round(sqrt(test$sigma2_hat), digits = 4), "on", test$df, "degrees of freedom")
+  res <- paste("Residual standard error:", round(sqrt(object$sigma2_hat), digits = 4), "on", object$df, "degrees of freedom")
   
   list <- list(m,res)
   class(list) <- "summary.linreg"
