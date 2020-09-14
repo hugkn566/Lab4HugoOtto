@@ -4,7 +4,7 @@
 \alias{print.linreg}
 \title{Print out the estimated coeffiencts}
 \usage{
-\method{print}{linreg}(x)
+\method{print}{linreg}(object, ...)
 }
 \arguments{
 \item{object}{An object of Class}

@@ -35,12 +35,3 @@ summary.linreg <- function(object,...){
   cat(" ", sep="\n")
   cat(res) 
 }
-
-#' @describeIn summary.linreg 
-
-# print.summary.linreg <- function(x,...){
-#   print(x[[1]])
-#   cat(" ", sep = "\n")
-#   cat(x[[2]]) 
-# }
-
