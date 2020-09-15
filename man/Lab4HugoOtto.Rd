@@ -10,7 +10,7 @@ returns an object of the S3 class "linreg" which can be explored with the follow
 \itemize{
   \item \code{\link{coef.linreg}}
   \item \code{\link{plot.linreg}}
-  \item \code{\link{pred.linreg}}
+  \item \code{\link{predict.linreg}}
   \item \code{\link{print.linreg}}
   \item \code{\link{residuals.linreg}}
   \item \code{\link{summary.linreg}}
