@@ -37,7 +37,7 @@ linreg <- function(formula, data){
   # The t-values for each coefficient
   t_beta <- beta_hat/(sqrt(diag(var_beta_hat)))
   
-  p <- 2*pt(q=abs(t_beta), df=df, lower.tail = FALSE)
+  p <- 2*stats::pt(q=abs(t_beta), df=df, lower.tail = FALSE)
 
   
   
