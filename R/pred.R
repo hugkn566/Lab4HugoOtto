@@ -5,7 +5,7 @@
 #' @return A vector of predicted values.
 #' @export
 
-predict.linreg <- function(object,...){
+pred <- function(object,...){
   y_hat <- as.vector(object$y_hat)
   return(y_hat)
 }
