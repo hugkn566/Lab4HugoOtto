@@ -12,25 +12,25 @@ plot.linreg <- function(object,...){
   data <- as.data.frame(cbind(object$y_hat, (object$e_hat)))
   outliers <- match(tail(sort(abs(object$e_hat)), n=3), abs(object$e_hat))
   
-  p <- ggplot(data=data, aes(x = y_hat, y = e_hat)) + 
-    geom_point(shape=1, size=3) + 
-    geom_text(data=data[outliers,], aes(label=outliers)) +
-    stat_smooth(data=data[-outliers,], se=FALSE, color="red") + 
-    geom_hline(yintercept = 0, col="grey", linetype="dotted") + 
-    theme_classic() + 
-    labs(x=" Fitted Values", y="Residuals", title="Residuals vs Fitted") + 
-    theme(plot.title=element_text(hjust = 0.5))
+  p <- ggplot2::ggplot(data=data, ggplot2::aes(x = y_hat, y = e_hat)) + 
+    ggplot2::geom_point(shape=1, size=3) + 
+    ggplot2::geom_text(data=data[outliers,], ggplot2::aes(label=outliers)) +
+    ggplot2::stat_smooth(data=data[-outliers,], se=FALSE, color="red") + 
+    ggplot2::geom_hline(yintercept = 0, col="grey", linetype="dotted") + 
+    ggplot2::theme_classic() + 
+    ggplot2::labs(x=" Fitted Values", y="Residuals", title="Residuals vs Fitted") + 
+    ggplot2::theme(plot.title=ggplot2::element_text(hjust = 0.5))
 
   data2 <- as.data.frame(cbind(object$y_hat, sqrt(abs(object$e_hat/sqrt(object$sigma2_hat)))))
   
-  p2 <- ggplot(data=data2, aes(x = y_hat, y = e_hat)) + 
-    geom_point(shape=1, size=3) + 
-    geom_text(data=data2[outliers,], aes(label=outliers)) +
-    stat_smooth(data=data2[-outliers,], se=FALSE, color="red") + 
-    geom_hline(yintercept = 0, col="grey", linetype="dotted") + 
-    theme_classic() +
-    labs(x=" Fitted Values", y=expression(sqrt("|Standardized residuals|")), title="Scale-Location") + 
-    theme(plot.title=element_text(hjust = 0.5))
+  p2 <- ggplot2::ggplot(data=data2, ggplot2::aes(x = y_hat, y = e_hat)) + 
+    ggplot2::geom_point(shape=1, size=3) + 
+    ggplot2::geom_text(data=data2[outliers,], ggplot2::aes(label=outliers)) +
+    ggplot2::stat_smooth(data=data2[-outliers,], se=FALSE, color="red") + 
+    ggplot2::geom_hline(yintercept = 0, col="grey", linetype="dotted") + 
+    ggplot2::theme_classic() +
+    ggplot2::labs(x=" Fitted Values", y=expression(sqrt("|Standardized residuals|")), title="Scale-Location") + 
+    ggplot2::theme(plot.title=ggplot2::element_text(hjust = 0.5))
 
   suppressMessages(suppressWarnings(plot(p)))  
   par(ask=TRUE)

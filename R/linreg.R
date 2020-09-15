@@ -11,7 +11,7 @@ linreg <- function(formula, data){
   stopifnot(class(formula)=="formula" & is.data.frame(data))
   
   # Setting up the matrices
-  X <- model.matrix(formula, data)
+  X <- stats::model.matrix(formula, data)
   y_name <- all.vars(formula, data)
   Y <- as.matrix(data[y_name[1]])
   
