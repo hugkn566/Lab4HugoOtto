@@ -13,7 +13,8 @@ License: GPL (>= 2)
 LazyData: true
 RoxygenNote: 7.1.1
 Imports:
-    ggplot2
+    ggplot2,
+    stats
 Suggests: 
     testthat,
     knitr,
