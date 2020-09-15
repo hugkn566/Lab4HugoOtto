@@ -5,7 +5,7 @@
 #' @return A list of summary statistics from a linear regression model, \code{object}, of the class "linreg".
 
 
-summary.linreg <- function(object,...){
+summary.linreg <- function(object){
   m <- matrix(0, nrow = nrow(object$var_beta_hat), ncol = 4, dimnames = list(row.names(object$var_beta_hat), c("Estimate", "Std.Error", "t value", "Pr(>|t|)")))
   m[,1] <- object$beta_hat
   m[,2] <- sqrt(diag(object$var_beta_hat))

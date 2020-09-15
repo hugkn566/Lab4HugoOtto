@@ -5,7 +5,7 @@
 #' @return Two scatter plots. The first one is residuals vs fitted values and the second is the scale-location.
 
 
-plot.linreg <- function(object,...){
+plot.linreg <- function(object){
   colnames(object$y_hat) <- "y_hat"
   colnames(object$e_hat) <- "e_hat"
   
