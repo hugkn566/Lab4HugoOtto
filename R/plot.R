@@ -10,7 +10,7 @@ plot.linreg <- function(object,...){
   colnames(object$e_hat) <- "e_hat"
   
   data <- as.data.frame(cbind(object$y_hat, (object$e_hat)))
-  outliers <- match(tail(sort(abs(object$e_hat)), n=3), abs(object$e_hat))
+  outliers <- match(utils::tail(sort(abs(object$e_hat)), n=3), abs(object$e_hat))
   
   p <- ggplot2::ggplot(data=data, ggplot2::aes(x = y_hat, y = e_hat)) + 
     ggplot2::geom_point(shape=1, size=3) + 
@@ -32,10 +32,10 @@ plot.linreg <- function(object,...){
     ggplot2::labs(x=" Fitted Values", y=expression(sqrt("|Standardized residuals|")), title="Scale-Location") + 
     ggplot2::theme(plot.title=ggplot2::element_text(hjust = 0.5))
 
-  suppressMessages(suppressWarnings(plot(p)))  
-  par(ask=TRUE)
-  suppressMessages(suppressWarnings(plot(p2)))
-  par(ask=FALSE)
+  suppressMessages(suppressWarnings(graphics::plot(p)))  
+  graphics::par(ask=TRUE)
+  suppressMessages(suppressWarnings(graphics::plot(p2)))
+  graphics::par(ask=FALSE)
 }
 
 
