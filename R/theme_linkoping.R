@@ -11,12 +11,10 @@ theme_linkoping <- function(){
     
     plot.title = ggplot2::element_text(size = 20,
                               hjust = 0.5,
-                              color="#00b9e7",
-                              family = font),
+                              color="#00b9e7"),
     
     axis.title = ggplot2::element_text(size = 15,
-                              color="#00b9e7",
-                              family = font),
+                              color="#00b9e7"),
     
     axis.text = ggplot2::element_text(size = 15,
                                       family = font),
