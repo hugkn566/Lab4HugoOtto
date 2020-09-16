@@ -23,7 +23,8 @@ library(Lab4HugoOtto)
 
 
 ```{r}
-linreg_obj <- linreg(Petal.Length~Species, datasets::iris)
+iris <- datasets::iris
+linreg_obj <- linreg(Petal.Length~Species, iris)
 ```
 
 # Methods for \code{linreg} objects

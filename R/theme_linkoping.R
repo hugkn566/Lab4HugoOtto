@@ -2,9 +2,7 @@
 #' @export
 
 theme_linkoping <- function(){
-  ggplot2::theme_minimal() %+replace%
-  
-  ggplot2::theme(
+    ggplot2::theme(
     
     panel.grid.major = ggplot2::element_blank(),
     panel.grid.minor = ggplot2::element_blank(),
@@ -16,9 +14,10 @@ theme_linkoping <- function(){
     axis.title = ggplot2::element_text(size = 15,
                               color="#00b9e7"),
     
-    axis.text = ggplot2::element_text(size = 15,
-                                      family = font),
-    axis.line = ggplot2::element_line(color = "black")
+    axis.text = ggplot2::element_text(size = 15),
+    axis.line = ggplot2::element_line(color = "black"),
+    
+    panel.background = ggplot2::element_rect(fill="white")
   )
 } 
 

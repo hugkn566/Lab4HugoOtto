@@ -44,7 +44,7 @@ linreg <- function(formula, data){
   
   
   result <- list(formula= formula,
-                 data_name= substitute(data),
+                 data_name= deparse(substitute(data)),
                  y_name = as.character(formula[2]),
                  x_names = as.character(formula[3]),
                  beta_hat=beta_hat,
