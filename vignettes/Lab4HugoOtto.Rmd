@@ -1,5 +1,6 @@
 ---
 title: "Lab4HugoOtto"
+author: "Hugo Knape & Otto Moen"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Lab4HugoOtto}
@@ -19,8 +20,59 @@ library(Lab4HugoOtto)
 ```
 
 # The linreg function
-Test
 
-# Methods for linreg objects
 
-Test
+```{r}
+linreg_obj <- linreg(Petal.Length~Species, datasets::iris)
+```
+
+# Methods for \code{linreg} objects
+
+The package also provides several generic methods for objects of the class \code{linreg}, which can be used to analyze different aspects of the results from the linear regression. Here follows a short description of each method.
+
+## \code{print.linreg}
+
+The \code{print.linreg} method will return the estimated coefficients from the regression model along with their names.
+
+```{r}
+print(linreg_obj)
+```
+
+## \code{plot.linreg}
+
+The \code{plot.linreg} method will return two plots using the \code{ggplot2} package. The two plots returned are the Residuals vs Fitted plot as well as the Scale-Location plot. 
+
+```{r}
+plot(linreg_obj)
+```
+
+## \code{residuals.linreg}
+
+The \code{residuals.linreg} method will return the residuals from the regression model as a vector.
+
+```{r}
+resid(linreg_obj)
+```
+
+
+## \code{pred}
+
+The \code{pred} method will return the predicted values from the regression model as a vector.
+
+```{r}
+pred(linreg_obj)
+```
+
+## \code{coef.linreg}
+
+The \code{coef.linreg} method will return the coefficients from the regression model as a named vector.
+
+```{r}
+coef(linreg_obj)
+```
+
+# \code{theme_linkoping}
+
+Finally the package provides a theme for plots created with the \code{ggplot2} package. This is a basic theme that controls the size of the plot title, the axis titles and the axis text. It also sets the colors of the plot title and axis title to a blue hue that matches the base color in the graphical manual of Linkoping University.     
+
+

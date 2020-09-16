@@ -16,7 +16,8 @@ Imports:
     ggplot2,
     stats,
     utils,
-    graphics
+    graphics,
+    datasets
 Suggests: 
     testthat,
     knitr,
