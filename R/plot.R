@@ -16,21 +16,20 @@ plot.linreg <- function(x,...){
   
   p <- ggplot2::ggplot(data=data, ggplot2::aes(x = y_hat, y = e_hat)) + 
     ggplot2::geom_point(shape=1, size=3) + 
-    ggplot2::geom_text(data=data[outliers,], ggplot2::aes(label=outliers)) +
-    ggplot2::stat_smooth(data=data[-outliers,], se=FALSE, color="red") + 
+    ggplot2::geom_text(data=data[outliers,], ggplot2::aes(label=outliers), nudge_x = 0.15) +
+    ggplot2::stat_smooth(data=data[-outliers,], se=FALSE, color="#ff6442") + 
     ggplot2::geom_hline(yintercept = 0, col="grey", linetype="dotted") + 
-    ggplot2::theme_classic() + 
-    ggplot2::labs(x=" Fitted Values", y="Residuals", title="Residuals vs Fitted") + 
-    ggplot2::theme(plot.title=ggplot2::element_text(hjust = 0.5))
+    theme_linkoping() + 
+    ggplot2::labs(x=" Fitted Values", y="Residuals", title="Residuals vs Fitted")
 
   data2 <- as.data.frame(cbind(x$y_hat, sqrt(abs(x$e_hat/sqrt(x$sigma2_hat)))))
   
   p2 <- ggplot2::ggplot(data=data2, ggplot2::aes(x = y_hat, y = e_hat)) + 
     ggplot2::geom_point(shape=1, size=3) + 
-    ggplot2::geom_text(data=data2[outliers,], ggplot2::aes(label=outliers)) +
-    ggplot2::stat_smooth(data=data2[-outliers,], se=FALSE, color="red") + 
+    ggplot2::geom_text(data=data2[outliers,], ggplot2::aes(label=outliers), nudge_x = 0.15) +
+    ggplot2::stat_smooth(data=data2[-outliers,], se=FALSE, color="#ff6442") + 
     ggplot2::geom_hline(yintercept = 0, col="grey", linetype="dotted") + 
-    ggplot2::theme_classic() +
+    theme_linkoping() +
     ggplot2::labs(x=" Fitted Values", y=expression(sqrt("|Standardized residuals|")), title="Scale-Location") + 
     ggplot2::theme(plot.title=ggplot2::element_text(hjust = 0.5))
 
