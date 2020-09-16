@@ -17,3 +17,7 @@ A vector of coefficients.
 \description{
 Extract coefficients from an object of the class "linreg".
 }
+\examples{
+linreg_obj <- linreg(Petal.Length~Species, datasets::iris)
+coef(linreg_obj)
+}

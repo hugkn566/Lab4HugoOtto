@@ -17,3 +17,7 @@ A list of estimated coeffiencts.
 \description{
 Estimated coeffiencts from an x of class "linreg".
 }
+\examples{
+linreg_obj <- linreg(Petal.Length~Species, datasets::iris)
+print(linreg_obj)
+}

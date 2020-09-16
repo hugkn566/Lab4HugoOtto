@@ -17,3 +17,7 @@ Two scatter plots. The first one is residuals vs fitted values and the second is
 \description{
 \code{plot} method for xs of the class "linreg".
 }
+\examples{
+linreg_obj <- linreg(Petal.Length~Species, datasets::iris)
+plot(linreg_obj)
+}

@@ -17,3 +17,7 @@ A list of summary statistics from a linear regression model, \code{object}, of t
 \description{
 \code{summary} method for objects of the class "linreg".
 }
+\examples{
+linreg_obj <- linreg(Petal.Length~Species, datasets::iris)
+summary(linreg_obj)
+}

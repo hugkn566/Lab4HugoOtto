@@ -20,10 +20,10 @@ library(Lab4HugoOtto)
 ```
 
 # The linreg function
-
+The Lab4HugoOtto package provides the linreg function which is used to fit linear models. The linreg function can take two arguments (formula, data) and returns a list with class linreg which include Regressions coefficients, the fitted values, the residuals, the degrees of freedom, the residual variance, the variance of the regression coefficients and the t-values for each coefficient. 
 
 ```{r}
-linreg_obj <- linreg(Petal.Length~Species, datasets::iris)
+linreg_obj <- linreg(Petal.Length~Species, iris)
 ```
 
 # Methods for \code{linreg} objects

@@ -17,3 +17,7 @@ A vector of residuals.
 \description{
 Residuals from an object of the class "linreg".
 }
+\examples{
+linreg_obj <- linreg(Petal.Length~Species, datasets::iris)
+residuals(linreg_obj)
+}

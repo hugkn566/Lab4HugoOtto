@@ -17,3 +17,6 @@ The function returns the results of the linear regression as an object of class 
 \description{
 Perform linear regression with OLS
 }
+\examples{
+linreg_obj <- linreg(Petal.Length~Species, datasets::iris)
+}

@@ -17,3 +17,7 @@ A vector of predicted values.
 \description{
 Predicted values from an object of the class "linreg".
 }
+\examples{
+linreg_obj <- linreg(Petal.Length~Species, datasets::iris)
+pred(linreg_obj)
+}
