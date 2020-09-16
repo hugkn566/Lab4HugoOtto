@@ -27,53 +27,53 @@ iris <- datasets::iris
 linreg_obj <- linreg(Petal.Length~Species, iris)
 ```
 
-# Methods for \code{linreg} objects
+# Methods for linreg objects
 
-The package also provides several generic methods for objects of the class \code{linreg}, which can be used to analyze different aspects of the results from the linear regression. Here follows a short description of each method.
+The package also provides several generic methods for objects of the class linreg, which can be used to analyze different aspects of the results from the linear regression. Here follows a short description of each method.
 
-## \code{print.linreg}
+## print.linreg
 
-The \code{print.linreg} method will return the estimated coefficients from the regression model along with their names.
+The print.linreg method will return the estimated coefficients from the regression model along with their names.
 
 ```{r}
 print(linreg_obj)
 ```
 
-## \code{plot.linreg}
+## plot.linreg
 
-The \code{plot.linreg} method will return two plots using the \code{ggplot2} package. The two plots returned are the Residuals vs Fitted plot as well as the Scale-Location plot. 
+The plot.linreg method will return two plots using the **ggplot2** package. The two plots returned are the Residuals vs Fitted plot as well as the Scale-Location plot. 
 
 ```{r, fig.width=4.5, fig.height=3, fig.align='center'}
 plot(linreg_obj)
 ```
 
-## \code{residuals.linreg}
+## residuals.linreg
 
-The \code{residuals.linreg} method will return the residuals from the regression model as a vector.
+The residuals.linreg method will return the residuals from the regression model as a vector.
 
 ```{r}
 head(resid(linreg_obj))
 ```
 
 
-## \code{pred}
+## pred
 
-The \code{pred} method will return the predicted values from the regression model as a vector.
+The pred method will return the predicted values from the regression model as a vector.
 
 ```{r}
 head(pred(linreg_obj))
 ```
 
-## \code{coef.linreg}
+## coef.linreg
 
-The \code{coef.linreg} method will return the coefficients from the regression model as a named vector.
+The coef.linreg method will return the coefficients from the regression model as a named vector.
 
 ```{r}
 coef(linreg_obj)
 ```
 
-# \code{theme_linkoping}
+# theme_linkoping
 
-Finally the package provides a theme for plots created with the \code{ggplot2} package. This is a basic theme that controls the size of the plot title, the axis titles and the axis text. It also sets the colors of the plot title and axis title to a blue hue that matches the base color in the graphical manual of Linkoping University.     
+Finally the package provides a theme for plots created with the **ggplot2** package. This is a basic theme that controls the size of the plot title, the axis titles and the axis text. It also sets the colors of the plot title and axis title to a blue hue that matches the base color in the graphical manual of Linkoping University.     
 
 
