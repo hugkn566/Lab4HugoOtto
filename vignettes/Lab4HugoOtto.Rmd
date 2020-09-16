@@ -23,6 +23,7 @@ library(Lab4HugoOtto)
 The Lab4HugoOtto package provides the linreg function which is used to fit linear models. The linreg function can take two arguments (formula, data) and returns a list with class linreg which include Regressions coefficients, the fitted values, the residuals, the degrees of freedom, the residual variance, the variance of the regression coefficients and the t-values for each coefficient. 
 
 ```{r}
+iris <- datasets::iris
 linreg_obj <- linreg(Petal.Length~Species, iris)
 ```
 
@@ -42,7 +43,7 @@ print(linreg_obj)
 
 The \code{plot.linreg} method will return two plots using the \code{ggplot2} package. The two plots returned are the Residuals vs Fitted plot as well as the Scale-Location plot. 
 
-```{r}
+```{r, fig.width=4.5, fig.height=3, fig.align='center'}
 plot(linreg_obj)
 ```
 
@@ -51,7 +52,7 @@ plot(linreg_obj)
 The \code{residuals.linreg} method will return the residuals from the regression model as a vector.
 
 ```{r}
-resid(linreg_obj)
+head(resid(linreg_obj))
 ```
 
 
@@ -60,7 +61,7 @@ resid(linreg_obj)
 The \code{pred} method will return the predicted values from the regression model as a vector.
 
 ```{r}
-pred(linreg_obj)
+head(pred(linreg_obj))
 ```
 
 ## \code{coef.linreg}
