@@ -17,7 +17,11 @@ Imports:
     stats,
     utils,
     graphics,
-    datasets
+    datasets,
+    dplyr,
+    caret,
+    nycflights13,
+    mlbench
 Suggests: 
     testthat,
     knitr,
