@@ -21,7 +21,8 @@ Imports:
     dplyr,
     caret,
     nycflights13,
-    mlbench
+    mlbench,
+    leaps
 Suggests: 
     testthat,
     knitr,
