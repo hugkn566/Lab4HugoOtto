@@ -1,3 +1,13 @@
+#' Visualize delays for airports in the USA
+#' 
+#' @description Uses ggplot2 to create a scatterplot showing delays at different airport in the USA
+#' @return Returns a ggplot object containing a scatterplot showing delays at different airport in the USA
+#' @examples 
+#' airport_delays <- visualize_airport_delays()
+#' airport_delays
+#' @export
+#' @importFrom dplyr %>% 
+
 visualize_airport_delays <- function(){
 flights <- nycflights13::flights
 airports <- nycflights13::airports

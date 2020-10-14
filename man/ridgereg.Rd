@@ -4,7 +4,7 @@
 \alias{ridgereg}
 \title{Perform Ridge regression with OLS}
 \usage{
-ridgereg(formula, data, lambda)
+ridgereg(formula, data, lambda = 0)
 }
 \arguments{
 \item{formula}{An object of the class \code{\link[stats]{formula}}.}

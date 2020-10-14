@@ -1,7 +1,7 @@
 Package: Lab4HugoOtto
 Version: 1.0
 Date: 2020-09-10
-Title: Linear regression 
+Title: Linear and ridge regression 
 Authors@R: c(person("Hugo", "Knape", role = c("aut", "cre"),
                      email = "hugkn566@student.liu.se"),
               person("Otto", "Moen", email = "ottmo242@student.liu.se", role = "aut"))
@@ -21,7 +21,7 @@ Imports:
     dplyr,
     caret,
     nycflights13,
-    mlbench,
+    MASS,
     leaps
 Suggests: 
     testthat,

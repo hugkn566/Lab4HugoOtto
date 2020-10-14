@@ -1,7 +1,7 @@
-#' Lab4HugoOtto: A package containing the a fuction for linear regression
+#' Lab4HugoOtto: A package containing functions for linear and ridge regression
 #' 
-#' The package provides a function called \code{\link{linreg}}. This function performs linear regression using ordinary least squares. The function
-#' returns an object of the S3 class "linreg" which can be explored with the followin methods:
+#' The package provides two functions. The first function is called \code{\link{linreg}}. This function performs linear regression using ordinary least squares. The function
+#' returns an object of the S3 class "linreg" which can be explored with the following methods:
 #' \itemize{
 #'   \item \code{\link{coef.linreg}}
 #'   \item \code{\link{plot.linreg}}
@@ -10,6 +10,14 @@
 #'   \item \code{\link{residuals.linreg}}
 #'   \item \code{\link{summary.linreg}}
 #' } 
+#' 
+#' The second function is called \code{\link{ridgereg}}. This function performs ridge regression using ordinary least squares. The function
+#' returns an object of the S3 class "ridgereg" which can be explored with the following methods:
+#' \itemize{
+#'   \item \code{\link{coef.ridgereg}}
+#'   \item \code{\link{predict.ridgereg}}
+#'   \item \code{\link{print.ridgereg}}
+#' }
 #' 
 #' @docType package
 #' @name Lab4HugoOtto
