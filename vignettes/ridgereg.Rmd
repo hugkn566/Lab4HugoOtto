@@ -16,6 +16,196 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(Lab4HugoOtto)
+library(caret)
+library(MASS)
 ```
 
+# Prediction problem using **ridgereg()** function
+
+In this vignette it will be demonstrated how to use the **ridgereg()** function provided by this package to solve a simple prediction problem. Using the function together with the **caret** package a predictive model can be created. The data used in this example is called **BostonHousing** and is provided by the **MASS** package.
+
+Before setting up the model some preprocessing is carried out on the data, where the numerical variables are scaled and centered:
+
+```{r}
+# Loading the data
+BostonHousing <- MASS::Boston
+
+# Scaling numeric variables
+scale_BostonHousing <- scale(as.matrix(BostonHousing[, c(1:3,5:13)]))
+scale_BostonHousing <- as.data.frame(scale_BostonHousing)
+
+# Adding back the response and one indicator variable
+scale_BostonHousing$medv <- BostonHousing$medv
+scale_BostonHousing$chas <- BostonHousing$chas
+BostonHousing <- scale_BostonHousing
+```
+
+With the processed data the prediction problem can now be solved in five steps.
+
+
+### 1. Dividing the data
+
+The first step is to divide the data into a test and training set so that the models can be trained and tested on different data. This is done using the **createDataPartition()** function below, with 80 precent of the data being included in the training set: 
+
+```{r}
+train <- caret::createDataPartition(y = BostonHousing$medv, p=0.8, list = FALSE)
+training <- BostonHousing[train,]
+test <- BostonHousing[-train, ]
+```
+
+
+### 2. Linear regression models
+
+To compare how well the **ridgereg()** function performs two linear regression models are fitted. The first model is a basic multiple regression model and the second is similar but will instead use forward selection for the covariates. This is done with the following code:
+
+```{r}
+fitlinear <- caret::train(medv~ . , 
+                          data=training,
+                          method="lm",
+                          preProc = c("center","scale"))
+
+
+fitlinear_forward <- caret::train(medv~.,
+                                  data=training,
+                                  method="leapForward",
+                                  tuneGrid = data.frame(nvmax=1:(ncol(BostonHousing)-1)),
+                                  preProc = c("center","scale"))
+```
+
+
+### 3. Evaluate linear models on the training set
+
+In this step the two linear models are evaluated using the result from the training set.
+
+```{r}
+rbind(fitlinear$results[2:7], fitlinear_forward$results[fitlinear_forward$bestTune[[1]],][2:7])
+```
+
+The first row contains the results from the basic linear regression model. It can be observed that the RMSE value is lower for the model using forward selection, suggesting that it is a better fit for the training set. The row number for the second row, 12, represents the amount of covariates chosen by the forward selection in the best model. 
+
+### 4. Ridge regression model
+
+Now that the linear regression models are fitted we can go ahead and fit the ridge regression model. Before this can be done the **ridgereg()** function has to be integrated into the **caret** package. To do this a list is created with the following code:
+
+```{r}
+Rid <- list(type = "Regression",
+              library = "Lab4HugoOtto",
+              loop = NULL)
+```
+
+
+This list then has to be filled with all the necessary elements that **caret** requires a custom model to have. This includes the parameters of the model, in this case lambda:
+
+```{r}
+prm <- data.frame(parameter = "lambda",
+                  class =  "numeric" ,
+                  label = "lambda")
+Rid$parameters <- prm
+```
+
+Another element required is the function that will fit the model:
+
+```{r}
+Fit<-function(x,y,lambda,param,lev,last,classProbs,...){
+  
+  names <- lapply(x, function(x){
+    all(x == y)
+  })
+  y_name <- names(x)[unlist(names)]
+  x_names <- names(x)[!unlist(names)]
+  
+  formula <- paste(y_name,"~", sep="")
+  
+  
+  for (xvar in 1:length(x_names)) {
+    formula <- paste(formula, "+", x_names[xvar], sep="")
+  }
+  
+  formula <- as.formula(formula)
+  model <- Lab4HugoOtto::ridgereg( formula = formula, data=x,lambda= param$lambda)
+  return(model)
+}
+
+Rid$fit <- Fit
+```
+
+The list also has to have a function to carry out predictions:
+
+```{r}
+pred <- function(modelFit, newdata , preProc = NULL, submodels = NULL){
+  predict(modelFit, newdata)
+}
+
+Rid$predict <- pred
+```
+
+Finally the list also requires some minor elements, such as which lambda values to fit models for and how to sort the results, among other things:
+
+```{r}
+Rid$grid <- function(x, y, len=NULL, search="grid"){
+  data.frame(lambda=seq(from= 0 , to = 5, by = 0.2))
+}
+
+Rid$sort <- function(x) x[order(-x$lambda),]
+
+Rid$prob <- list(NULL)
+
+Rid$label <- "Ridge regression"
+```
+
+With all the necessary elements now in the list the model is ready to be fitted within the **caret** framework:
+
+```{r}
+RidFit <- caret::train( y = training$medv,
+                          x = training,
+                          method = Rid
+)
+RidFit
+```
+
+
+### 5. Find optimal value for lambda
+
+In this step we attempt to find an optimal value for the lambda parameter using 10-fold cross-validation on the training set. This is done by adding a control parameter to the **train()** function:
+
+```{r}
+control <- trainControl(
+  method = "repeatedcv",
+  number = 10
+)
+
+RidFit_control <- caret::train( y = training$medv,
+                        x = training,
+                        method = Rid,
+                        trControl = control
+)
+RidFit_control
+```
+
+
+### 6. Evaluate performance on test set
+
+The final step is to evaluate the three fitted values on the test set. This is done by predicting new values using the test set and then calculating the RMSE value for these predictions:
+
+```{r}
+rmse <- function(error){
+  sqrt(mean(error^2))
+}
+
+# Linear regression
+fitlinear_predict <- predict(fitlinear, test)
+fitlinear_test <- test$medv - fitlinear_predict
+
+# Linear regression - forward selection
+fitlinear_forward_predict <- predict(fitlinear_forward, test)
+fitlinear_forward_test <- test$medv - fitlinear_forward_predict
+
+# Ridge regression
+RidFit_predict <- predict(RidFit_control, test)
+RidFit_test <- test$medv - RidFit_predict
+
+rmse(fitlinear_test)
+rmse(fitlinear_forward_test)
+rmse(RidFit_test)
+```
 

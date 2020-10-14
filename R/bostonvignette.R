@@ -1,20 +1,16 @@
-install.packages("mlbench")
-library(mlbench)
-install.packages("caret")
+
 library(caret)
 BostonHousing <- MASS::Boston
-#1
 scale_BostonHousing <- scale(as.matrix(BostonHousing[, c(1:3,5:13)]))
 scale_BostonHousing <- as.data.frame(scale_BostonHousing)
 scale_BostonHousing$medv <- BostonHousing$medv
 scale_BostonHousing$chas <- BostonHousing$chas
 BostonHousing <- scale_BostonHousing
+
+
 train <- caret::createDataPartition(y = BostonHousing$medv, p=0.8, list = FALSE)
 training <- BostonHousing[train,]
 test <- BostonHousing[-train, ]
-###############################################
-###########KOM IHÅG ATT SCALEA DATA############
-###############################################
 
 #2
 fitlinear <- caret::train(medv~ . , 
