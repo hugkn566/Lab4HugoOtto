@@ -10,7 +10,12 @@ weather <- weather[,c("origin","year","month","day","hour","temp","humid","wind_
 
 data <- dplyr::inner_join(flights, weather, by= c("year", "month", "day", "hour", "origin"))
 data <- data[complete.cases(data), ]
-
+data <- data[, 5:13]
+data_scale <- scale(as.matrix(data[,c(1,4:9)]))
+data_scale <- as.data.frame(data_scale)
+data_scale$dep_delay <- data$dep_delay
+data_scale$origin <- data$origin
+data <- data_scale
 #3
 train <- caret::createDataPartition(y = data$dep_delay, p=0.8, list = FALSE)
 training <- data[train,]
@@ -44,7 +49,7 @@ Rid$sort <- function(x) x[order(-x$lambda),]
 Rid$label <- "Ridge regression"
 
 Rid$grid <- function(x, y, len=NULL, search="grid"){
-  data.frame(lambda=seq(from= 0 , to = 1, by = 0.5))
+  data.frame(lambda=seq(from= 1 , to = 2, by = 1))
 }
 
 Fit<-function(x,y,lambda,param,lev,last,classProbs,...){
@@ -69,8 +74,29 @@ Fit<-function(x,y,lambda,param,lev,last,classProbs,...){
 
 Rid$fit <- Fit
 
-RidFit_delay <- caret::train( y = training$dep_delay[1:10000],
-                        x = training[1:10000,-c(1,2)],
+RidFit_delay <- caret::train( y = training$dep_delay,
+                        x = training,
                         method = Rid
 )
-#Take away Year and month!
+
+
+
+#4
+
+rmse <- function(error){
+  sqrt(mean(error^2))
+}
+
+RidFit_delay_predict <- predict(RidFit_delay, vali)
+error <- vali$dep_delay - RidFit_delay_predict
+vali_error <- rmse(error)
+vali_error
+
+
+#5
+
+RidFit_delay_predict_test <- predict(RidFit_delay, test)
+error_test <- test$dep_delay - RidFit_delay_predict_test
+test_error <- rmse(error = error_test
+                   )
+test_error

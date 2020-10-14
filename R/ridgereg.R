@@ -8,7 +8,7 @@
 #' ridredge_obj <- ridgereg(Petal.Length~Species, datasets::iris)
 #' @export
 
-ridgereg <- function(formula,data,lambda){
+ridgereg <- function(formula,data,lambda=0){
   # Checking if the arguments are correct
   stopifnot(class(formula)=="formula" & is.data.frame(data))
   
