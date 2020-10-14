@@ -8,7 +8,7 @@ Authors@R: c(person("Hugo", "Knape", role = c("aut", "cre"),
 Author: Hugo Knape, Otto Moen 
 Maintainer: Otto Moen <ottmo242@student.liu.se>
 Depends: R (>= 3.1.0)
-Description: The package performs regressions with OLS
+Description: The package performs regressions with OLS.
 License: GPL (>= 2)
 LazyData: true
 RoxygenNote: 7.1.1
@@ -22,7 +22,8 @@ Imports:
     caret,
     nycflights13,
     MASS,
-    leaps
+    leaps,
+    methods
 Suggests: 
     testthat,
     knitr,
