@@ -24,8 +24,7 @@ In this vignette we will try to predict the delay of each flights using our own 
 
 ## 1.2.1
 ### 1
-We start by reading in the data and take out every variable from each dataset we think can have a predicitve value. We also take out the variables *Year*, *Hour* , *Day* and *Hour* to be able to join the two datasets together. After that we take out every NA value in the combined dataset and scale it. We choice to not scale the variable *dep_delay* who is our dependent variable and *Origin* which is a categorical variable. 
-
+We start by reading in the data and take out every variable from each dataset we think can have a predicitve value. We also take out the variables *Year*, *Hour* , *Day* and *Hour* to be able to join the two datasets together. 
 ```{r}
 weather <- nycflights13::weather
 flights <- nycflights13::flights
@@ -36,7 +35,7 @@ weather <- weather[,c("origin","year","month","day","hour","temp","humid","wind_
 ```
 
 ### 2 
-After that we take out every NA value in the combined dataset and scale it. We choice to not scale the variable *dep_delay* who is our dependent variable and *Origin* which is a categorical variable. We also creates a interaction effect of *disctance* and *wind_speed* too se if smaller planes (that can't fly as long as big planes) have more problem with *wind_speed* then bigger planes.
+After that we take out every NA value in the combined dataset and scale it. We choose to not scale the variable *dep_delay* which is our dependent variable and *Origin* which is a categorical variable. We also create an interaction effect of *disctance* and *wind_speed* to see if smaller planes (that can't fly as long as big planes) have more problems with *wind_speed* than bigger planes.
 
 ```{r}
 data <- dplyr::inner_join(flights, weather, by= c("year", "month", "day", "hour", "origin"))
@@ -53,9 +52,10 @@ data$distance_wind_speed <- (data$distance*data$wind_speed)
 
 ### 3
 
-We use the **caret** to divide the dataset into three sets: test, train and validation (with the proportions 5%, 80% and 15%).
+We use the **createDataPartition()** function to divide the dataset into three sets: test, train and validation (with the proportions 5%, 80% and 15%).
 
 ```{r}
+set.seed(961024)
 train <- caret::createDataPartition(y = data$dep_delay, p=0.8, list = FALSE)
 training <- data[train,]
 training <- as.data.frame(training)
@@ -118,15 +118,9 @@ Fit<-function(x,y,lambda,param,lev,last,classProbs,...){
 
 Rid$fit <- Fit
 
-RidFit_delay <- caret::train( y = training$dep_delay,
-                        x = training,
-                        method = Rid
-)
-RidFit_delay
 ```
 
-
-We have used this function in the object **Rid** To try on different lambda values to find the best
+We have used the following element in the object **Rid** to fit the model with different lambda values to find the optimal one:
 
 ```{r, eval=FALSE}
 Rid$grid <- function(x, y, len=NULL, search="grid"){
@@ -134,9 +128,15 @@ Rid$grid <- function(x, y, len=NULL, search="grid"){
 }
 ```
 
-After have seen that lambda = 2 has the best RMSE for the training data we use this code to evalute the RMSE on the validating data.
+With the fitted model we then calculate RMSE on the validating data. After attempting this we have seen that lambda = 2 has the best RMSE for the validating data. The results of this model is presented below:
 
 ```{r}
+RidFit_delay <- caret::train( y = training$dep_delay,
+                        x = training,
+                        method = Rid
+)
+RidFit_delay
+
 rmse <- function(error){
   sqrt(mean(error^2))
 }
@@ -151,7 +151,7 @@ We can see that our RMSE for the validation data is a bit bigger than for the tr
 
 ### 5
 
-We then use our test dataset to predict our train data and calculate the RMSE for the test data.
+We then use this model to predict our test data and calculate the RMSE for test data.
 
 ```{r}
 RidFit_delay_predict_test <- predict(RidFit_delay, test)
@@ -161,3 +161,4 @@ test_RMSE <- rmse(error = error_test
 test_RMSE
 ```
 
+The RMSE for the test data is slightly higher than for the training data but lower than for the validating data. This confirms that the model does not seem to be overfitted on the training data. 

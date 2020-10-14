@@ -48,6 +48,7 @@ With the processed data the prediction problem can now be solved in five steps.
 The first step is to divide the data into a test and training set so that the models can be trained and tested on different data. This is done using the **createDataPartition()** function below, with 80 precent of the data being included in the training set: 
 
 ```{r}
+set.seed(12345)
 train <- caret::createDataPartition(y = BostonHousing$medv, p=0.8, list = FALSE)
 training <- BostonHousing[train,]
 test <- BostonHousing[-train, ]
@@ -61,15 +62,13 @@ To compare how well the **ridgereg()** function performs two linear regression m
 ```{r}
 fitlinear <- caret::train(medv~ . , 
                           data=training,
-                          method="lm",
-                          preProc = c("center","scale"))
+                          method="lm")
 
 
 fitlinear_forward <- caret::train(medv~.,
                                   data=training,
                                   method="leapForward",
-                                  tuneGrid = data.frame(nvmax=1:(ncol(BostonHousing)-1)),
-                                  preProc = c("center","scale"))
+                                  tuneGrid = data.frame(nvmax=1:(ncol(BostonHousing)-1)))
 ```
 
 
@@ -81,7 +80,7 @@ In this step the two linear models are evaluated using the result from the train
 rbind(fitlinear$results[2:7], fitlinear_forward$results[fitlinear_forward$bestTune[[1]],][2:7])
 ```
 
-The first row contains the results from the basic linear regression model. It can be observed that the RMSE value is lower for the model using forward selection, suggesting that it is a better fit for the training set. The row number for the second row, 12, represents the amount of covariates chosen by the forward selection in the best model. 
+The first row contains the results from the basic linear regression model. It can be observed that the RMSE value is lower for the model using forward selection, suggesting that it is a better fit for the training set. The row number for the second row represents the amount of covariates chosen by the forward selection in the best model. 
 
 ### 4. Ridge regression model
 
@@ -143,7 +142,7 @@ Finally the list also requires some minor elements, such as which lambda values 
 
 ```{r}
 Rid$grid <- function(x, y, len=NULL, search="grid"){
-  data.frame(lambda=seq(from= 0 , to = 5, by = 0.2))
+  data.frame(lambda=seq(from= 0 , to = 20, by = 0.5))
 }
 
 Rid$sort <- function(x) x[order(-x$lambda),]
@@ -208,4 +207,6 @@ rmse(fitlinear_test)
 rmse(fitlinear_forward_test)
 rmse(RidFit_test)
 ```
+
+The values of RMSE show that the linear regression model using forward selection is slightly better than the model not using forward selection. Both models have lower RMSE values compared to the ridge regression model.
 
