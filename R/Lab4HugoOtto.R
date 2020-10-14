@@ -5,7 +5,7 @@
 #' \itemize{
 #'   \item \code{\link{coef.linreg}}
 #'   \item \code{\link{plot.linreg}}
-#'   \item \code{\link{pred}}
+#'   \item \code{\link{predict.linreg}}
 #'   \item \code{\link{print.linreg}}
 #'   \item \code{\link{residuals.linreg}}
 #'   \item \code{\link{summary.linreg}}

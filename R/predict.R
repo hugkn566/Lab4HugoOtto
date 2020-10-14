@@ -6,10 +6,10 @@
 #' @return A vector of predicted values.
 #' @examples 
 #' linreg_obj <- linreg(Petal.Length~Species, datasets::iris)
-#' pred(linreg_obj)
+#' predict(linreg_obj)
 #' @export
 
-pred <- function(object,...){
+predict.linreg <- function(object,...){
   y_hat <- as.vector(object$y_hat)
   return(y_hat)
 }

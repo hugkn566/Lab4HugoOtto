@@ -23,10 +23,10 @@ test_that("print() works", {
   expect_output(print(linreg_mod),"( )*\\(Intercept\\)( )*Sepal\\.Width( )*Sepal\\.Length")
 })
 
-test_that("pred() works", {
+test_that("predict() works", {
   linreg_mod <- linreg(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
   
-  expect_equal(round(unname(pred(linreg_mod)[c(1,5,7)]),2), c(1.85, 1.53, 1.09))    
+  expect_equal(round(unname(predict(linreg_mod)[c(1,5,7)]),2), c(1.85, 1.53, 1.09))    
 })
 
 test_that("resid() works", {

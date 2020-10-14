@@ -56,12 +56,12 @@ head(resid(linreg_obj))
 ```
 
 
-## pred
+## predict
 
-The pred method will return the predicted values from the regression model as a vector.
+The predict.linreg method will return the predicted values from the regression model as a vector.
 
 ```{r}
-head(pred(linreg_obj))
+head(predict(linreg_obj))
 ```
 
 ## coef.linreg
