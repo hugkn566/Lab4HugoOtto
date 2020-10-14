@@ -1,0 +1,163 @@
+---
+title: "flight_delay"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{flight_delay}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(Lab4HugoOtto)
+library(caret)
+library(nycflights13)
+```
+
+In this vignette we will try to predict the delay of each flights using our own **ridgereg()** function from package **Lab4HugoOtto**. The data comes from the package **nycflights13 **and we will read in the **weather** and **flights** dataset.
+
+## 1.2.1
+### 1
+We start by reading in the data and take out every variable from each dataset we think can have a predicitve value. We also take out the variables *Year*, *Hour* , *Day* and *Hour* to be able to join the two datasets together. After that we take out every NA value in the combined dataset and scale it. We choice to not scale the variable *dep_delay* who is our dependent variable and *Origin* which is a categorical variable. 
+
+```{r}
+weather <- nycflights13::weather
+flights <- nycflights13::flights
+
+flights <- flights[,c("year","month", "day", "hour", "sched_dep_time", "dep_delay", "origin", "distance")]
+weather <- weather[,c("origin","year","month","day","hour","temp","humid","wind_speed","precip", "visib")]
+
+```
+
+### 2 
+After that we take out every NA value in the combined dataset and scale it. We choice to not scale the variable *dep_delay* who is our dependent variable and *Origin* which is a categorical variable. We also creates a interaction effect of *disctance* and *wind_speed* too se if smaller planes (that can't fly as long as big planes) have more problem with *wind_speed* then bigger planes.
+
+```{r}
+data <- dplyr::inner_join(flights, weather, by= c("year", "month", "day", "hour", "origin"))
+data <- data[complete.cases(data), ]
+data <- data[, 5:13]
+data_scale <- scale(as.matrix(data[,c(1,4:9)]))
+data_scale <- as.data.frame(data_scale)
+data_scale$dep_delay <- data$dep_delay
+data_scale$origin <- data$origin
+data <- data_scale
+data$distance_wind_speed <- (data$distance*data$wind_speed)
+```
+
+
+### 3
+
+We use the **caret** to divide the dataset into three sets: test, train and validation (with the proportions 5%, 80% and 15%).
+
+```{r}
+train <- caret::createDataPartition(y = data$dep_delay, p=0.8, list = FALSE)
+training <- data[train,]
+training <- as.data.frame(training)
+ny_data <- data[-train,]
+train2 <- caret::createDataPartition(y = ny_data$dep_delay, p=0.75, list = FALSE)
+vali <- ny_data[train2, ]
+test <- ny_data[-train2, ]
+```
+
+
+### 4
+
+To train ridge regressions models we use the same object as created in ridgereg vignette. 
+
+```{r}
+Rid <- list(type = "Regression",
+            library = "Lab4HugoOtto",
+            loop = NULL)
+prm <- data.frame(parameter = "lambda",
+                  class =  "numeric" ,
+                  label = "lambda")
+Rid$parameters <- prm
+
+
+pred <- function(modelFit, newdata , preProc = NULL, submodels = NULL){
+  predict(modelFit, newdata)
+}
+
+Rid$predict <- pred
+
+Rid$prob <- list(NULL)
+
+Rid$sort <- function(x) x[order(-x$lambda),]
+
+Rid$label <- "Ridge regression"
+
+Rid$grid <- function(x, y, len=NULL, search="grid"){
+  data.frame(lambda=2)
+}
+
+Fit<-function(x,y,lambda,param,lev,last,classProbs,...){
+  
+  names <- lapply(x, function(x){
+    all(x == y)
+  })
+  y_name <- names(x)[unlist(names)]
+  x_names <- names(x)[!unlist(names)]
+  
+  formula <- paste(y_name,"~", sep="")
+  
+  
+  for (xvar in 1:length(x_names)) {
+    formula <- paste(formula, "+", x_names[xvar], sep="")
+  }
+  
+  formula <- as.formula(formula)
+  model <- Lab4HugoOtto::ridgereg( formula = formula, data=x,lambda= param$lambda)
+  return(model)
+}
+
+Rid$fit <- Fit
+
+RidFit_delay <- caret::train( y = training$dep_delay,
+                        x = training,
+                        method = Rid
+)
+RidFit_delay
+```
+
+
+We have used this function in the object **Rid** To try on different lambda values to find the best
+
+```{r, eval=FALSE}
+Rid$grid <- function(x, y, len=NULL, search="grid"){
+  data.frame(lambda=seq(from= 1 , to = 50, by = 1))
+}
+```
+
+After have seen that lambda = 2 has the best RMSE for the training data we use this code to evalute the RMSE on the validating data.
+
+```{r}
+rmse <- function(error){
+  sqrt(mean(error^2))
+}
+
+RidFit_delay_predict <- predict(RidFit_delay, vali)
+error <- vali$dep_delay - RidFit_delay_predict
+vali_RMSE <- rmse(error)
+vali_RMSE
+```
+
+We can see that our RMSE for the validation data is a bit bigger than for the training data but still pretty close to it which should mean that the model we built is not overfitted.
+
+### 5
+
+We then use our test dataset to predict our train data and calculate the RMSE for the test data.
+
+```{r}
+RidFit_delay_predict_test <- predict(RidFit_delay, test)
+error_test <- test$dep_delay - RidFit_delay_predict_test
+test_RMSE <- rmse(error = error_test
+                   )
+test_RMSE
+```
+
